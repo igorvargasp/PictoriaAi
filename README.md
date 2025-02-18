@@ -33,18 +33,6 @@ If you want to learn how to create it please follow below tutorial👇: <br />
 - 📊 Usage Analytics
 - 🎁 ...much more
 
-## Images of The AI App:
-
-![Photo AI clone Dashboard](https://github.com/codebucks27/Pictoria-AI-Starter-Code/blob/main/screenshots/Dashboard.png)
----
-![Photo AI clone Image Generation Page](https://github.com/codebucks27/Pictoria-AI-Starter-Code/blob/main/screenshots/Image-Generation.png)
----
-![Photo AI clone Model Training Page](https://github.com/codebucks27/Pictoria-AI-Starter-Code/blob/main/screenshots/Model-Training.png)
----
-![Photo AI clone Billing Page](https://github.com/codebucks27/Pictoria-AI-Starter-Code/blob/main/screenshots/Billing.png)
----
-![Photo AI clone Account Settings Page](https://github.com/codebucks27/Pictoria-AI-Starter-Code/blob/main/screenshots/Account-Settings.png)
-
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js 15 (App Router)
@@ -119,11 +107,8 @@ When training your custom model, ensure:
 - 1:1 resolution (1048x1048 or higher)
 - Images under 45MB total size
 
-### 7. Stripe Setup
 
-Watch our detailed video tutorial for Stripe integration setup: [Stripe Setup Tutorial](https://www.youtube.com/watch?v=7AQNeii5K7E&t=27960s)
-
-### 8. Start Development Server
+### 7. Start Development Server
 
 ```bash
 npm run dev
