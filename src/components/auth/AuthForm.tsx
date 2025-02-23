@@ -19,8 +19,8 @@ const subTitle = {
   signup: "Enter your details below to create your account.",
 };
 
-const AuthForm = () => {
-  const [mode, setMode] = useState<"login" | "reset" | "signup">("login");
+const AuthForm = ({ state }: { state: "login" | "reset" | "signup" }) => {
+  const [mode, setMode] = useState<"login" | "reset" | "signup">(state);
 
   return (
     <div className="space-y-6">

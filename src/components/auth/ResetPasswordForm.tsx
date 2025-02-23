@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useId } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { resetPassword } from "@/actions/auth-actions";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -22,6 +24,7 @@ const formSchema = z.object({
 });
 
 const ResetPasswordForm = ({ className }: { className?: string }) => {
+  const toastId = useId();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,7 +33,18 @@ const ResetPasswordForm = ({ className }: { className?: string }) => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    toast.loading("sending email...", { id: toastId });
+    resetPassword({
+      email: values.email
+    }).then(({ error, success, data }) => {
+      if (success) {
+        toast.success("Password reset email sent successfully!", { id: toastId });
+        console.log(data)
+      } else {
+        toast.error(error, { id: toastId });
+        console.log(error)
+      }
+    });
   };
 
   return (

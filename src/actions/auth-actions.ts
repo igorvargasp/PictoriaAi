@@ -56,3 +56,59 @@ export async function logout(): Promise<void> {
   await supabase.auth.signOut();
   redirect("/login");
 }
+
+
+export async function updateProfile(values: { fullName: string, email: string }) {
+  const supabase = await createClient();
+  const full_name = values.fullName;
+
+
+  const { data: profileData, error } = await supabase.auth.updateUser(
+    {
+      data: {
+        full_name
+      }
+    }
+  );
+
+  return {
+    error: error?.message || "An error occurred while updating profile",
+    success: !error,
+    data: profileData || null,
+  };
+}
+
+export async function resetPassword(values: { email: string }) {
+  const supabase = await createClient();
+
+
+
+  const { data: emailData, error } = await supabase.auth.resetPasswordForEmail(
+    values.email
+  );
+
+  return {
+    error: error?.message || "An error occurred while updating email",
+    success: !error,
+    data: emailData || null,
+  };
+}
+
+
+export async function changePassword(newPassword: string): Promise<AuthResponse> {
+  const supabase = await createClient();
+
+
+
+  const { data: passwordData, error } = await supabase.auth.updateUser({
+    password: newPassword
+  });
+
+  return {
+    error: error?.message || "An error occurred while updating password",
+    success: !error,
+    data: passwordData || null,
+  };
+}
+
+

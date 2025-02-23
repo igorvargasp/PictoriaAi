@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "replicate.delivery",
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "aihnhkiaimeedygrwpvb.supabase.co",
+      },
     ]
   }
 };

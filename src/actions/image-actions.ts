@@ -9,6 +9,7 @@ import {
     imageMeta
 } from "image-meta"
 import { randomUUID } from "crypto";
+import { getCredits } from "./credit-actions";
 
 
 
@@ -37,6 +38,15 @@ export async function generateImage(input: z.infer<typeof ImageFormSchema>): Pro
         output_quality: input.output_quality,
         prompt_strength: 0.8,
         num_inference_steps: input.num_inference_steps
+    }
+
+    const { data: credits } = await getCredits();
+    if (!credits?.image_generation_count || credits.image_generation_count <= 0) {
+        return {
+            error: "Insufficient credits",
+            success: false,
+            data: null
+        }
     }
 
     try {
@@ -133,4 +143,37 @@ export async function storeImages(data: storeImageInput[]) {
         }
     }
 
+}
+
+
+export async function deleteImages(id: string, imageName?: string) {
+    const supabase = await createClient();
+
+    const { data: { user }, } = await supabase.auth.getUser();
+
+    if (!user) {
+        return {
+            error: "Unauthorized",
+            success: false,
+            data: null
+        }
+    }
+
+    const { data, error } = await supabase.from('generated_images').delete().eq('id', id).select();
+
+    if (error) {
+        return {
+            error: error.message || "Failed to delete image",
+            success: false,
+            data: null
+        }
+    }
+
+    await supabase.storage.from('generated_images').remove([`${user.id}/${imageName}`]);
+
+    return {
+        error: null,
+        success: true,
+        data: data
+    }
 }
